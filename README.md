@@ -1,18 +1,39 @@
 # LedgerLine — Money Movement with a Ledger You Can Prove
 
-LedgerLine is a money movement application designed to ensure that financial transactions are accurate, authorised, traceable, and recorded consistently.
+LedgerLine is a digital banking simulation designed to make financial transactions accurate, authorized, traceable, and consistent.
 
-The project addresses common financial application risks such as duplicate transaction requests, simultaneous withdrawals, unauthorised access, incorrect account balances, and inconsistent transaction records.
+The application addresses common financial system risks such as duplicate transaction requests, simultaneous withdrawals, unauthorized access, incorrect account balances, and inconsistent transaction records.
 
 **Challenge:** Snovasys Fresher Hiring Challenge 2026 — VVIT  
-**Duration:** November 6–12, 2026  
-**Repository:** [LedgerLine](https://github.com/Vasanthirangu2006/LedgerLine)
+**Duration:** November 6–12, 2026
+
+## Live Application
+
+- **Frontend:** https://ledgerline-beta-eight.vercel.app
+- **Backend API:** https://ledgerline-backend-y824.onrender.com
+- **Backend Health:** https://ledgerline-backend-y824.onrender.com/api/health
+- **Database Health:** https://ledgerline-backend-y824.onrender.com/api/db-check
+
+The application uses a deployed Flask backend, PostgreSQL database, and Vite frontend.
+
+## Project Demo
+
+Watch the LedgerLine application walkthrough:
+
+[▶ Watch LedgerLine Demo Video](https://drive.google.com/file/d/1HRnI21VtgcHzQto12lSWnrEe9TDhqRng/view?usp=sharing)
 
 ## Problem Statement
 
-Financial applications must handle money movement reliably. Duplicate requests, concurrent transactions, unauthorised operations, and incorrect balance updates can result in financial losses.
+Financial applications must process money movements reliably. Duplicate requests, concurrent transactions, unauthorized operations, and incorrect balance updates can result in financial losses.
 
-LedgerLine addresses these challenges through transaction validation, idempotency, database transaction management, account ownership checks, and a traceable double-entry ledger.
+LedgerLine addresses these challenges through:
+
+- Transaction validation.
+- Idempotency handling.
+- Database transaction management.
+- Account ownership checks.
+- Ledger records and audit logging.
+- Concurrent withdrawal protection.
 
 ## Technology Stack
 
@@ -25,11 +46,15 @@ LedgerLine addresses these challenges through transaction validation, idempotenc
 | Frontend | TypeScript, Vite |
 | HTTP Client | Axios |
 | API Testing | Pytest, Flask Test Client |
+| Backend Hosting | Render |
+| Database Hosting | Neon PostgreSQL |
+| Frontend Hosting | Vercel |
 | Version Control | Git and GitHub |
 
 ## Implemented Features
 
 ### 1. Authentication
+
 - User registration and login.
 - JWT-based authentication.
 - Protected API endpoints.
@@ -37,13 +62,16 @@ LedgerLine addresses these challenges through transaction validation, idempotenc
 - Password hashing.
 
 ### 2. Account Management
-- Account creation.
+
+- Bank account creation.
 - Retrieve user accounts.
-- Retrieve account details.
+- Retrieve individual account details.
 - Check account balances.
 - Account ownership validation.
+- Support for savings and current account types.
 
 ### 3. Money Movement
+
 - Deposits.
 - Withdrawals.
 - Account-to-account transfers.
@@ -52,6 +80,7 @@ LedgerLine addresses these challenges through transaction validation, idempotenc
 - Currency compatibility validation.
 
 ### 4. Transaction Integrity
+
 - Double-entry ledger records for transfers.
 - Database transaction management.
 - Account-level row locking during money movement.
@@ -61,12 +90,14 @@ LedgerLine addresses these challenges through transaction validation, idempotenc
 - Concurrent withdrawal protection.
 
 ### 5. Audit and Transaction History
+
 - Audit log creation for financial operations.
 - Transaction history retrieval.
 - Account-level access restrictions.
-- Users can only view transactions and ledger entries associated with their own accounts.
+- Users can only access transaction and ledger information associated with their own accounts.
 
 ### 6. Frontend
+
 - Login and registration screens.
 - Account overview and balance display.
 - Deposit and withdrawal forms.
@@ -93,6 +124,7 @@ LedgerLine/
 │   │   ├── conftest.py
 │   │   ├── test_api.py
 │   │   └── test_concurrency.py
+│   │
 │   ├── config.py
 │   ├── requirements.txt
 │   └── run.py
@@ -108,10 +140,10 @@ LedgerLine/
 ├── docs/
 │   └── API.md
 │
-├── .gitignore
 ├── README.md
 ├── PROMPTS.md
-└── THREATS.md
+├── THREATS.md
+└── .gitignore
 ```
 
 ## Prerequisites
@@ -119,8 +151,9 @@ LedgerLine/
 - Python 3.10 or later.
 - PostgreSQL.
 - Node.js and npm.
+- Git.
 
-## Backend Setup
+## Local Installation and Setup
 
 ### 1. Clone the repository
 
@@ -139,7 +172,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install dependencies
+### 3. Install backend dependencies
 
 ```powershell
 pip install -r requirements.txt
@@ -158,7 +191,11 @@ DB_NAME=ledgerline_db
 JWT_SECRET_KEY=your_secure_random_secret
 ```
 
-Replace the example values with your local PostgreSQL configuration. Never commit `.env` or expose database credentials.
+Replace the example values with your local PostgreSQL configuration.
+
+Never commit `.env` files or expose database credentials and application secrets.
+
+The application also supports a `DATABASE_URL` environment variable for hosted PostgreSQL deployments.
 
 ### 5. Create the PostgreSQL database
 
@@ -168,19 +205,25 @@ Create a database named:
 CREATE DATABASE ledgerline_db;
 ```
 
-Ensure that the database user has the necessary permissions.
+Ensure that the database user has the required permissions.
 
 ### 6. Start the Flask backend
+
+Run from the `backend/` directory:
 
 ```powershell
 python run.py
 ```
 
-Backend URL: `http://127.0.0.1:5001`
+Backend URL:
 
-Health check: `http://127.0.0.1:5001/api/health`
+`http://127.0.0.1:5001`
 
-## Frontend Setup
+Health check:
+
+`http://127.0.0.1:5001/api/health`
+
+### 7. Start the frontend
 
 Open a separate terminal:
 
@@ -190,15 +233,19 @@ npm install
 npm run dev
 ```
 
-Frontend development URL: `http://127.0.0.1:5173`
+Frontend development URL:
+
+`http://127.0.0.1:5173`
 
 The Vite development server proxies `/api` requests to the Flask backend running on port `5001`.
 
-To create a production frontend build:
+### 8. Create a production frontend build
 
 ```powershell
 npm run build
 ```
+
+The production build is generated in the `frontend/dist/` directory.
 
 ## API Overview
 
@@ -218,23 +265,23 @@ npm run build
 
 Protected endpoints require a valid JWT access token.
 
-Financial transaction requests require an idempotency key supplied through the `Idempotency-Key` request header.
+Financial transaction requests use an idempotency key supplied through the `Idempotency-Key` request header.
 
 Refer to [docs/API.md](docs/API.md) for additional API details.
 
 ## Verification and Testing
 
-The project was tested through both manual API/database verification and automated backend tests.
+The project was verified through automated backend tests and manual API, frontend, and database checks.
 
 ### Automated Test Results
+
+**Latest previously verified result: 15 tests passed.**
 
 Run the test suite from the `backend/` directory:
 
 ```powershell
 python -m pytest -v
 ```
-
-**Latest result: 15 passed in 15.27 seconds.**
 
 Automated tests cover:
 
@@ -243,7 +290,7 @@ Automated tests cover:
 - Protected endpoint authentication.
 - Account ownership restrictions.
 - Deposit processing and idempotent retries.
-- Rejection of reused idempotency keys with different request payloads.
+- Reused idempotency keys with different request payloads.
 - Invalid transaction amount validation.
 - Insufficient balance rejection.
 - Transfer ledger debit-credit verification.
@@ -254,18 +301,18 @@ Automated tests cover:
 
 A dedicated concurrency test sends two simultaneous ₹80 withdrawal requests against an account with ₹100.
 
-Expected and verified result:
+**Verified expected result:**
 
 - One withdrawal succeeds.
 - The other withdrawal is rejected.
-- Final account balance remains ₹20.
+- The final account balance remains ₹20.
 - The account balance does not become negative.
 
 This verifies the tested concurrent withdrawal scenario; it is not a full-scale load or stress test.
 
 ### Manual Verification
 
-The following scenarios were also manually verified using API requests, the frontend, and PostgreSQL queries:
+Manual checks included:
 
 - Successful deposits, withdrawals, and transfers.
 - Exact-request retries.
@@ -275,35 +322,62 @@ The following scenarios were also manually verified using API requests, the fron
 - Account balance reconciliation against ledger entries.
 - Double-entry debit-credit verification.
 
+## Deployment Architecture
+
+LedgerLine is deployed using the following services:
+
+| Layer | Platform |
+|---|---|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | Neon PostgreSQL |
+
+The frontend communicates with the deployed Flask API over HTTPS. The backend connects to the hosted PostgreSQL database through environment-based configuration.
+
+Production secrets and database credentials are configured through hosting environment variables rather than committed to the repository.
+
 ## Current Development Status
 
-**Completed**
+### Completed
+
 - Flask backend and PostgreSQL integration.
 - JWT authentication and account management.
 - Deposits, withdrawals, and transfers.
-- Double-entry ledger and audit logging.
+- Double-entry ledger records for transfers.
+- Audit logging.
 - Idempotency handling.
 - Database transaction and account locking logic.
 - Integrated TypeScript frontend.
-- Automated backend tests: 15 passing.
+- Automated backend tests.
 - Manual API, frontend, and database verification.
 - Concurrent withdrawal scenario testing.
+- Production frontend and backend deployment.
+- Project documentation and demo video.
 
-**Further improvements**
+### Future Improvements
+
 - Broader automated security and concurrency testing.
-- Production deployment and configuration.
-- Additional monitoring and operational safeguards.
+- Rate limiting and additional authentication safeguards.
+- Database migrations.
+- Improved monitoring and operational safeguards.
+- Further production security hardening.
+
+## Security Documentation
+
+See [THREATS.md](THREATS.md) for the threat model, identified risks, implemented protections, and known limitations.
 
 ## AI Tools Used
 
-ChatGPT (OpenAI) was used as a development assistant for project planning, implementation guidance, debugging, database configuration, API development, testing guidance, and Git/GitHub workflows.
+ChatGPT (OpenAI) was used as a development assistant for project planning, implementation guidance, debugging, database configuration, API development, testing guidance, documentation, and Git/GitHub workflows.
 
-Implementation decisions and generated code were reviewed and tested during development. Testing results are reported only for scenarios that were actually executed.
+Generated suggestions and code were reviewed and adapted during development. Testing results are reported only for scenarios that were actually executed.
+
+See [PROMPTS.md](PROMPTS.md) for representative prompts and AI-use disclosure.
 
 ## Repository
 
-GitHub: https://github.com/Vasanthirangu2006/LedgerLine
+GitHub: [LedgerLine Repository](https://github.com/Vasanthirangu2006/LedgerLine)
 
 ---
 
-**LedgerLine — Every transaction should be accurate, authorised, and traceable.**
+**LedgerLine — Every transaction should be accurate, authorized, and traceable.**
