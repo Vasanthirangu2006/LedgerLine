@@ -1,5 +1,6 @@
 
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from config import Config
@@ -17,6 +18,14 @@ def create_app(test_config=None):
     if test_config:
         app.config.update(test_config)
 
+    CORS(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": ["https://ledgerline-beta-eight.vercel.app"]
+            }
+        }
+    )
     db.init_app(app)
     jwt.init_app(app)
 
