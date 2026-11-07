@@ -9,25 +9,26 @@ db = SQLAlchemy()
 jwt = JWTManager()
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    # Allow tests to use a separate database and test settings.
+    if test_config:
+        app.config.update(test_config)
 
     db.init_app(app)
     jwt.init_app(app)
 
-    # Register authentication routes
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
 
-    # Register account routes
     from app.routes.accounts import accounts_bp
     app.register_blueprint(accounts_bp)
 
     from app.routes.transactions import transactions_bp
     app.register_blueprint(transactions_bp)
 
-    # Home route
     @app.route("/")
     def home():
         return {
@@ -35,12 +36,10 @@ def create_app():
             "status": "healthy"
         }
 
-    # Health check
     @app.route("/api/health")
     def health():
         return {"status": "healthy"}
 
-    # Database check
     @app.route("/api/db-check")
     def db_check():
         try:
@@ -62,7 +61,6 @@ def create_app():
                 "message": "Database connection failed"
             }, 500
 
-    # Initialize database tables
     with app.app_context():
         from app import models
         db.create_all()
